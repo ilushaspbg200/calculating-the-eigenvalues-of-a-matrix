@@ -2,7 +2,6 @@
 void Matrix::SetMatrix()
 {
 	array = new double* [line];
-	cout << "Введите матрицу: ";
 	for (int i = 0; i < line; i++) {
 		array[i] = new double[column];
 		for (int j = 0; j < column; j++)
@@ -22,7 +21,7 @@ void Matrix::ShowMyMatrix()
 
 }
 
-void Matrix::operator=(const Matrix& other) // присваивание
+void Matrix::operator=(const Matrix& other)
 {
 	for (int i = 0; i < line; i++) {
 		delete[] array[i];
@@ -42,7 +41,6 @@ void Matrix::operator=(const Matrix& other) // присваивание
 double* Matrix::gauss(double** A, double* b, int n)
 {
 	for (int i = 0; i < n; ++i) {
-		// Поиск максимального элемента
 		int max_row = i;
 		for (int k = i + 1; k < n; ++k) {
 			if (std::abs(A[k][i]) > std::abs(A[max_row][i])) {
@@ -166,30 +164,6 @@ Matrix Matrix::operator*(const double num)
 	}
 	return temp;
 }
-//Matrix Matrix::inverseMatrix() {
-//	int n = this->line;
-//	double** res;
-//	double* y = new double[n];
-//	double* gau;
-//	int i, j, k;
-//	res = new double* [n];
-//	for (i = 0; i < n; i++) {
-//		res[i] = new double[n];
-//	}
-//	for (i = 0; i < n; i++) {
-//
-//		for (j = 0; j < n; j++) {
-//			if (i == j) y[j] = 1;
-//			else y[j] = 0;
-//		}
-//		gau = gauss(this->array, y, n);
-//		for (k = 0; k < n; k++) {
-//			res[k][i] = gau[k];
-//		}
-//	}
-//	Matrix RES(n, n, res);
-//	return RES;
-//}
 
 Matrix Matrix::inverseMatrix()
 {
@@ -206,10 +180,9 @@ Matrix Matrix::inverseMatrix()
 		result.array[i][i] = 1.0;
 	}
 
-	// Приводим матрицу к верхнетреугольному виду
 	for (int i = 0; i < n; ++i) {
 		if (temp[i][i] == 0) {
-			throw std::invalid_argument("Матрица вырожденная, обратной матрицы не существует");
+			throw std::invalid_argument("The matrix is degenerate, there is no inverse matrix");
 		}
 		for (int j = i + 1; j < n; ++j) {
 			double factor = temp[j][i] / temp[i][i];
@@ -220,7 +193,6 @@ Matrix Matrix::inverseMatrix()
 		}
 	}
 
-	// Приводим матрицу к диагональному виду
 	for (int i = 0; i < n; ++i) {
 		double factor = temp[i][i];
 		for (int j = 0; j < n; ++j) {
@@ -229,7 +201,6 @@ Matrix Matrix::inverseMatrix()
 		}
 	}
 
-	// Обратный проход метода Гаусса-Жордана
 	for (int i = n - 1; i > 0; --i) {
 		for (int j = i - 1; j >= 0; --j) {
 			double factor = temp[j][i];
