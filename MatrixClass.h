@@ -5,8 +5,8 @@
 using namespace std;
 class Matrix {
 private:
-	int line; // строка
-	int column; // столбец
+	int line; 
+	int column;
 public:
 	double** array;
 	Matrix() {
@@ -45,7 +45,7 @@ public:
 			array[i][0]=temp[i];
 		}
 	}
-	Matrix(const Matrix& other) { // копирование
+	Matrix(const Matrix& other) {
 		this->line = other.line;
 		this->column = other.column;
 		this->array = new double* [line];
