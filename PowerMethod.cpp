@@ -35,15 +35,8 @@ double** Find_Lambda(int n, Matrix first_mat, Matrix second_mat) {
 	}
 	return Lambda;
 }
-//void Clear_Vec(int n,double** array) {
-//	for (int i = 0; i < n; i++) {
-//		delete[] array[i];
-//	}
-//	delete array;
-//
-//}
+
 double Power_Method(int n, Matrix A,Matrix Diag) {
-	// произвольный начальный вектор
 	double** y0 = new double* [n];
 	for (int i = 0; i < n; i++) {
 		y0[i] = new double[1];
@@ -55,7 +48,7 @@ double Power_Method(int n, Matrix A,Matrix Diag) {
 	double** Lambda1 = Find_Lambda(n, y1, Z0);
 	Matrix LAMBDA1(n, 1, Lambda1);
 	double** zi = NormVec(n, y1.array);
-	Matrix Zi(n, 1, zi); // создаем zi векторы
+	Matrix Zi(n, 1, zi); 
 	Matrix Yi = A * Zi;
 	double** Lambda2 = Find_Lambda(n, Yi, Zi);
 	Matrix LAMBDA2(n, 1, Lambda2);
@@ -65,16 +58,16 @@ double Power_Method(int n, Matrix A,Matrix Diag) {
 		//Clear_Vec(n, Lambda2);
 		//Clear_Vec(n, zi);
 		zi = NormVec(n, Yi.array);
-		Matrix N(n, 1, zi); // нормированная матрица 
+		Matrix N(n, 1, zi); 
 		Zi = N;
 		Yi = A * Zi;
 		Lambda2 = Find_Lambda(n, Yi, Zi);
-		Matrix Lambda2_temp(n, 1, Lambda2);// чтобы присвоить матрице новую матрицу
+		Matrix Lambda2_temp(n, 1, Lambda2);
 		LAMBDA2 = Lambda2_temp;
 		i += 1;
 
 	}
-	cout << endl << "Количество итераций: " << i << endl;
+	cout << endl << "Number of iterations: " << i << endl;
 	double res = 0;
 	for (int j = 0; j < n; j++) {
 		res += LAMBDA2.array[j][0];
@@ -84,18 +77,15 @@ double Power_Method(int n, Matrix A,Matrix Diag) {
 		if (LAMBDA2.array[j][0] != 0)
 			I += 1;
 	}
-	res = res / I; // собс число
+	res = res / I; 
 	double ma = -10000000000;
 	for (int k = 0; k < n; k++) {
 		if (Diag.array[k][k] > ma)
 			ma = Diag.array[k][k];
 	}
-	ma = ma + random_double(0.0000001, 0.000001);
-	//cout << "Собственный вектор: " << endl;
-	//showVec(n, NormVec(n,Yi.array)); // собственный вектор
-	cout << endl << "собственный вектор 2 : " << endl;
+	cout << endl << "eigenvector 2 : " << endl;
 	showVec(n, Zi.array);
-	cout << endl << "Собственное число: " << endl;
+	cout << endl << "eigennumber: " << endl;
 	return ma;
 }
 
