@@ -37,7 +37,6 @@ double Sum_Mew(int n, Matrix Mew) {
 
 Matrix gauss(int n,Matrix A, Matrix b) {
 	for (int i = 0; i < n; ++i) {
-		// ѕоиск максимального элемента
 		int max_row = i;
 		for (int k = i + 1; k < n; ++k) {
 			if (std::abs(A.array[k][i]) > std::abs(A.array[max_row][i])) {
@@ -67,10 +66,10 @@ Matrix gauss(int n,Matrix A, Matrix b) {
 
 Matrix reverse_power_method(int n,Matrix A, Matrix sigma0)
 {
-	Matrix Vec(n, n); // здесь собственные векторы
+	Matrix Vec(n, n); 
 	for (int i = 0; i < n; i++) {
 		double sigmai_1 = sigma0.array[i][0];
-		// произвольный начальный вектор
+		
 		double** y0 = new double* [n];
 		for (int j = 0; j < n; j++) {
 			y0[j] = new double[1];
@@ -78,7 +77,7 @@ Matrix reverse_power_method(int n,Matrix A, Matrix sigma0)
 		}
 		double** z0 = NormVec(n, y0);
 		Matrix Z0(n, 1, z0);
-		Matrix Yi = gauss(n, (A - generate_one_mat(n)* sigmai_1), Z0); // проверить работает ли умножение на число 
+		Matrix Yi = gauss(n, (A - generate_one_mat(n)* sigmai_1), Z0); 
 		double** z1 = NormVec(n, Yi.array);
 		Matrix Z1(n, 1, z1);
 		Matrix Mewi = generate_Mew(n, Z0, Yi);
@@ -98,10 +97,10 @@ Matrix reverse_power_method(int n,Matrix A, Matrix sigma0)
 			Vec.array[j][i] = Z1.array[j][0];
 		}
 	}
-	cout << endl << "—обственные векторы: " << endl;
+	cout << endl << "Eigenvectors: " << endl;
 	Vec.ShowMyMatrix();
 	cout << endl;
-	cout << "—обственные значени€: " << endl;
+	cout << "Eigenvalues: " << endl;
 	for (int i = 0; i < n; i++) {
 		cout << sigma0.array[i][0] << " ";
 	}
